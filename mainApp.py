@@ -51,7 +51,7 @@ class Root(Resource):
 	def get(self):
 		return app.send_static_file('index.html')
 
-class signIn(Resource):
+class SignIn(Resource):
 	def post(self):
 
 		if not request.json:
@@ -103,5 +103,7 @@ class signIn(Resource):
 			responseCode = 403
 
 		return make_response(jsonify(response), responseCode)
-	
-	
+
+api = Api(app)
+api.add_resource(Root,'/')
+api.add_resource(SignIn, '/signin')
