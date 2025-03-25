@@ -106,4 +106,5 @@ class SignIn(Resource):
 
 api = Api(app)
 api.add_resource(Root,'/')
-api.add_resource(SignIn, '/signin')
+api.add_resource(SignIn, '/login')
+
