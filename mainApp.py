@@ -104,7 +104,19 @@ class SignIn(Resource):
 
 		return make_response(jsonify(response), responseCode)
 
+
+class logout(Resource):
+	def delete(self):
+		if 'username' in session:
+			session.pop('username', None)
+			response = {'status': 'success'}
+			responseCode = 200
+		else:
+			response = {'status': 'fail'}
+			responseCode = 400
+		return make_response(jsonify(response), responseCode)
+
 api = Api(app)
 api.add_resource(Root,'/')
 api.add_resource(SignIn, '/login')
-
+api.add_resource(logout, '/logout')
