@@ -9,3 +9,14 @@ CREATE TABLE user(
     created datetime NOT NULL,
     PRIMARY KEY (userId)
 );
+
+-- -------userVerification table----------
+DROP TABLE IF EXISTS userVerification;
+CREATE TABLE userVerification(
+    userId int NOT NULL,
+    email varchar(255) NOT NULL,
+    emailHash varchar(255) NOT NULL,
+    created datetime NOT NULL,
+    PRIMARY KEY (userId),
+    FOREIGN KEY (userId) REFERENCES user(userId)
+);
