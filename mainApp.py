@@ -138,9 +138,14 @@ class signUp(Resource):
 			if len(request_params['password']) > 255 or len(request_params['username']) < 8:
 				abort(400)
 
+class getUsers(Resource):
+	def get(self):
+
+
 
 api = Api(app)
 api.add_resource(Root,'/')
 api.add_resource(SignIn, '/login')
 api.add_resource(logout, '/logout')
 api.add_resource(signUp, '/signup')
+api.add_resource(getUsers, '/users')
