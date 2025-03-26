@@ -115,8 +115,32 @@ class logout(Resource):
 			response = {'status': 'fail'}
 			responseCode = 400
 		return make_response(jsonify(response), responseCode)
+	
+class signUp(Resource):
+	def post(self):
+			if not request.json:
+				abort(400) # bad request
+
+		# Parse the json
+			parser = reqparse.RequestParser()
+			try:
+				# Check for required attributes in json document, create a dictionary
+				parser.add_argument('username', type=str, required=True)
+				parser.add_argument('password', type=str, required=True)
+				parser.add_argument('email', type = str, required=True)
+				request_params = parser.parse_args()
+			except:
+				abort(400) # bad request
+			if '@' not in request_params['email']:
+				abort(400)
+			if len(request_params['username']) > 50 or len(request_params['username']) == 0:
+				abort(400)
+			if len(request_params['password']) > 255 or len(request_params['username']) < 8:
+				abort(400)
+
 
 api = Api(app)
 api.add_resource(Root,'/')
 api.add_resource(SignIn, '/login')
 api.add_resource(logout, '/logout')
+api.add_resource(signUp, '/signup')
