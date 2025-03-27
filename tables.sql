@@ -20,3 +20,87 @@ CREATE TABLE userVerification(
     PRIMARY KEY (userId),
     FOREIGN KEY (userId) REFERENCES user(userId)
 );
+
+-- ---------subscriber table-------------
+DROP TABLE IF EXISTS subscriber;
+CREATE TABLE subscriber(
+    subscriberId int NOT NULL AUTO_INCREMENT,
+    subChannelId int NOT NULL,
+    userId int NOT NULL,
+    created datetime NOT NULL,
+    PRIMARY KEY (subscriberId),
+    FOREIGN KEY (subChannelId) REFERENCES user(userId),
+    FOREIGN KEY (userId) REFERENCES user(userId)
+);
+
+-- -------------video table--------------
+DROP TABLE IF EXISTS video;
+CREATE TABLE video(
+    videoId int NOT NULL AUTO_INCREMENT,
+    userId int NOT NULL,
+    title varchar(255) NOT NULL,
+    description varchar(1023) NOT NULL,
+    likes int NOT NULL,
+    views int NOT NULL,
+    videoFile varchar(255) NOT NULL,
+    created datetime NOT NULL,
+    PRIMARY KEY (videoId),
+    FOREIGN KEY (userId) REFERENCES user(userId)
+);
+
+-- -----------videoLike table------------
+DROP TABLE IF EXISTS videoLike;
+CREATE TABLE videoLike(
+    userId int NOT NULL,
+    videoId int NOT NULL,
+    dislike boolean NOT NULL, -- 0 for like 1 for dislike
+    PRIMARY KEY (userId, videoId),
+    FOREIGN KEY (userId) REFERENCES user(userId),
+    FOREIGN KEY (videoId) REFERENCES video(videoId)
+);
+
+-- -----------comment table--------------
+DROP TABLE IF EXISTS comment;
+CREATE TABLE comment(
+    commentId int NOT NULL AUTO_INCREMENT,
+    userId int NOT NULL,
+    videoId int NOT NULL,
+    parentCommentId int NOT NULL,
+    comment varchar(1023) NOT NULL,
+    created datetime NOT NULL,
+    PRIMARY KEY (commentId),
+    FOREIGN KEY (userId) REFERENCES user(userId),
+    FOREIGN KEY (videoId) REFERENCES video(videoId)
+);
+
+-- ---------commentLike table------------
+DROP TABLE IF EXISTS commentLike;
+CREATE TABLE commentLike(
+    userId int NOT NULL,
+    videoId int NOT NULL,
+    dislike boolean NOT NULL, -- 0 for like 1 for dislike
+    PRIMARY KEY (userId, videoId),
+    FOREIGN KEY (userId) REFERENCES user(userId),
+    FOREIGN KEY (videoId) REFERENCES video(videoId)
+);
+
+-- ----------playlist table--------------
+DROP TABLE IF EXISTS playlist;
+CREATE TABLE playlist(
+    playlistId int NOT NULL AUTO_INCREMENT,
+    userId int NOT NULL,
+    name varchar(255) NOT NULL,
+    created datetime NOT NULL,
+    PRIMARY KEY (playlistId),
+    FOREIGN KEY (userId) REFERENCES user(userId)
+);
+
+-- ---------playlistEntry table----------
+DROP TABLE IF EXISTS playlistEntry;
+CREATE TABLE playlistEntry(
+    playlistId int NOT NULL AUTO_INCREMENT,
+    videoId int NOT NULL,
+    PRIMARY KEY (playlistId),
+    FOREIGN KEY (playlistId) REFERENCES playlist(playlistId),
+    FOREIGN KEY (videoId) REFERENCES video(videoId)
+);

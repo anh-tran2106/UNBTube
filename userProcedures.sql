@@ -108,3 +108,13 @@ begin
   DELETE FROM user WHERE userId = userIdIn;
 end//
 DELIMITER ;
+
+-- --------------------getUsers-----------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS getUsers //
+
+CREATE PROCEDURE getUsers()
+begin
+  SELECT * FROM user;
+end//
+DELIMITER ;
