@@ -64,7 +64,11 @@ DROP PROCEDURE IF EXISTS setUsername //
 
 CREATE PROCEDURE setUsername(IN userIdIn int, usernameIn varchar(255))
 begin
-  UPDATE user SET username = usernameIn WHERE userId = userIdIn;
+  IF(SELECT * FROM user WHERE userId = userIdIn)
+    THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'username already in use';
+  ELSE
+    UPDATE user SET username = usernameIn WHERE userId = userIdIn;
+  END IF;
 end//
 DELIMITER ;
 
@@ -84,7 +88,11 @@ DROP PROCEDURE IF EXISTS setEmail //
 
 CREATE PROCEDURE setEmail(IN userIdIn int, emailIn varchar(255))
 begin
-  UPDATE user SET email = emailIn WHERE userId = userIdIn;
+  IF(SELECT * FROM user WHERE userId = userIdIn)
+    THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'email already in use';
+  ELSE
+    UPDATE user SET email = emailIn WHERE userId = userIdIn;
+  END IF;
 end//
 DELIMITER ;
 
@@ -94,8 +102,15 @@ DROP PROCEDURE IF EXISTS createUser //
 
 CREATE PROCEDURE createUser(IN usernameIn varchar(255), emailIn varchar(255), passwordIn varchar(255))
 begin
-  INSERT INTO user (username, email, pswd, verified, created) VALUES
-    (usernameIn, emailIn, passwordIn, 0, CURDATE());
+ IF(SELECT * FROM user WHERE email = emailIn)
+    THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'email already in use';
+ ELSE
+    IF(SELECT * FROM user WHERE username = usernameIn)
+      THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'username already in use';
+    ELSE 
+      INSERT INTO user (username, email, pswd, verified, created) VALUES (usernameIn, emailIn, passwordIn, 0, CURDATE());
+    END IF;
+  END IF;
 end//
 DELIMITER ;
 
@@ -105,7 +120,11 @@ DROP PROCEDURE IF EXISTS removeUser //
 
 CREATE PROCEDURE removeUser(IN userIdIn int)
 begin
-  DELETE FROM user WHERE userId = userIdIn;
+  IF(SELECT * FROM user WHERE userId = userIdIn)
+    THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'user does not exist';
+  ELSE
+    DELETE FROM user WHERE userId = userIdIn;
+  END IF;
 end//
 DELIMITER ;
 
