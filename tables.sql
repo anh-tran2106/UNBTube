@@ -2,9 +2,10 @@
 DROP TABLE IF EXISTS user;
 CREATE TABLE user(
     userId int NOT NULL AUTO_INCREMENT,
-    username varchar(255) NOT NULL, 
-    email varchar(255) NOT NULL,
-    pswd varchar(255) NOT NULL,
+    username varchar(256) NOT NULL, 
+    email varchar(256) NOT NULL,
+    pswd varchar(256) NOT NULL,
+    salt varchar(256) NOT NULL,
     verified boolean NOT NULL,
     created datetime NOT NULL,
     PRIMARY KEY (userId)
@@ -14,8 +15,8 @@ CREATE TABLE user(
 DROP TABLE IF EXISTS userVerification;
 CREATE TABLE userVerification(
     userId int NOT NULL,
-    email varchar(255) NOT NULL,
-    emailHash varchar(255) NOT NULL,
+    email varchar(256) NOT NULL,
+    emailHash varchar(256) NOT NULL,
     created datetime NOT NULL,
     PRIMARY KEY (userId),
     FOREIGN KEY (userId) REFERENCES user(userId)
