@@ -100,7 +100,7 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS createUser //
 
-CREATE PROCEDURE createUser(IN usernameIn varchar(255), emailIn varchar(255), passwordIn varchar(255))
+CREATE PROCEDURE createUser(IN usernameIn varchar(255), emailIn varchar(255), passwordIn varchar(255), saltIn varchar(256))
 begin
  IF(SELECT * FROM user WHERE email = emailIn)
     THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'email already in use';
@@ -108,7 +108,7 @@ begin
     IF(SELECT * FROM user WHERE username = usernameIn)
       THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'username already in use';
     ELSE 
-      INSERT INTO user (username, email, pswd, verified, created) VALUES (usernameIn, emailIn, passwordIn, 0, CURDATE());
+      INSERT INTO user (username, email, pswd, salt, verified, created) VALUES (usernameIn, emailIn, passwordIn, saltIn, 0, CURDATE());
     END IF;
   END IF;
 end//
