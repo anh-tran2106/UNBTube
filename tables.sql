@@ -15,7 +15,6 @@ CREATE TABLE user(
 DROP TABLE IF EXISTS userVerification;
 CREATE TABLE userVerification(
     userId int NOT NULL,
-    email varchar(256) NOT NULL,
     emailHash varchar(256) NOT NULL,
     created datetime NOT NULL,
     PRIMARY KEY (userId),
