@@ -11,6 +11,7 @@ import pymysql.cursors
 import ssl #include ssl libraries
 import verifyUser
 import createUser
+import signIn
 
 import settings # Our server and db settings, stored in settings.py
 
@@ -70,28 +71,17 @@ class SignIn(Resource):
 		except:
 			abort(400) # bad request
 		if request_params['username'] in session:
-			response = {'status': 'success'}
+			response = {'status': 'Success'}
 			responseCode = 200
 		else:
-			try:
-				ldapServer = Server(host=settings.LDAP_HOST)
-				ldapConnection = Connection(ldapServer,
-					raise_exceptions=True,
-					user='uid='+request_params['username']+', ou=People,ou=fcs,o=unb',
-					password = request_params['password'])
-				ldapConnection.open()
-				ldapConnection.start_tls()
-				ldapConnection.bind()
+			validate = signIn.signin(request_params['username'], request_params['password'])
+			if (validate):
 				session['username'] = request_params['username']
-                # Stuff in here to find the esiting userId or create a use and get the created userId
-				response = {'status': 'success', 'user_id':'1' }
-				responseCode = 201
-			except LDAPException:
-				response = {'status': 'Access denied'}
-				print(response)
-				responseCode = 403
-			finally:
-				ldapConnection.unbind()
+				response = {'status': 'success'}
+				return make_response(jsonify(response), 200)
+			else:
+				response = {'status': 'Invalid Login Information', 'user_id':request_params['userId'] }
+				return make_response(jsonify(response), 400)
 
 		return make_response(jsonify(response), responseCode)
 
@@ -126,12 +116,15 @@ class signUp(Resource):
 
 		# Parse the json
 			parser = reqparse.RequestParser()
-
-			# Check for required attributes in json document, create a dictionary
-			parser.add_argument('username', type=str, required=True)
-			parser.add_argument('password', type=str, required=True)
-			parser.add_argument('email', type = str, required=True)
-			request_params = parser.parse_args()
+   
+			try:
+				# Check for required attributes in json document, create a dictionary
+				parser.add_argument('username', type=str, required=True)
+				parser.add_argument('password', type=str, required=True)
+				parser.add_argument('email', type = str, required=True)
+				request_params = parser.parse_args()
+			except:
+				abort(400)
 			if '@' not in request_params['email']:
 				abort(400)
 			if len(request_params['username']) > 50 or len(request_params['username']) == 0:
