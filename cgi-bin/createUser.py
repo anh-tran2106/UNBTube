@@ -26,16 +26,16 @@ def CreateUser(username, email, password):
     sqlProc = 'createUser'
     sqlArgs = [username, email, hashPass, salt,]
     try:
-        #cursor = dbConnection.cursor()
-        #cursor.callproc(sqlProc, sqlArgs)
-        #dbConnection.commit()
-        createVRec("New12@email7.com")
+        cursor = dbConnection.cursor()
+        cursor.callproc(sqlProc, sqlArgs)
+        dbConnection.commit()
+        print(createVRec(email))
     except pymysql.MySQLError as e:
         return {"Status": 400, "Message": "A MySQL Error has occured\nSQL Error Message: {e}"}
     except Exception as e:
         return {"Status": 500, "Message": "A general error has occured.\nError message: {e}"}
     finally:
-        #cursor.close()
+        cursor.close()
         dbConnection.close()
 
 
