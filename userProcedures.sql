@@ -71,9 +71,9 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS setUsername //
 
-CREATE PROCEDURE setUsername(IN userIdIn int, usernameIn varchar(256))
+CREATE PROCEDURE setUsername(IN userIdIn int, usernameIn varchar(255))
 begin
-  IF EXISTS(SELECT * FROM user WHERE userId = userIdIn)
+  IF(SELECT * FROM user WHERE userId = userIdIn)
     THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'username already in use';
   ELSE
     UPDATE user SET username = usernameIn WHERE userId = userIdIn;
@@ -85,7 +85,7 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS setPassword //
 
-CREATE PROCEDURE setPassword(IN userIdIn int, passwordIn varchar(256))
+CREATE PROCEDURE setPassword(IN userIdIn int, passwordIn varchar(255))
 begin
   UPDATE user SET pswd = passwordIn WHERE userId = userIdIn;
 end//
@@ -95,9 +95,9 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS setEmail //
 
-CREATE PROCEDURE setEmail(IN userIdIn int, emailIn varchar(256))
+CREATE PROCEDURE setEmail(IN userIdIn int, emailIn varchar(255))
 begin
-  IF EXISTS(SELECT * FROM user WHERE userId = userIdIn)
+  IF(SELECT * FROM user WHERE userId = userIdIn)
     THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'email already in use';
   ELSE
     UPDATE user SET email = emailIn WHERE userId = userIdIn;
@@ -109,7 +109,7 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS createUser //
 
-CREATE PROCEDURE createUser(IN usernameIn varchar(256), emailIn varchar(256), passwordIn varchar(256), saltIn varchar(256))
+CREATE PROCEDURE createUser(IN usernameIn varchar(255), emailIn varchar(255), passwordIn varchar(255), saltIn varchar(256))
 begin
  IF EXISTS(SELECT * FROM user WHERE email = emailIn)
     THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'email already in use';
@@ -129,10 +129,10 @@ DROP PROCEDURE IF EXISTS removeUser //
 
 CREATE PROCEDURE removeUser(IN userIdIn int)
 begin
-  IF EXISTS(SELECT * FROM user WHERE userId = userIdIn)
-    THEN DELETE FROM user WHERE userId = userIdIn;
+  IF(SELECT * FROM user WHERE userId = userIdIn)
+    THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'user does not exist';
   ELSE
-    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'user does not exist';
+    DELETE FROM user WHERE userId = userIdIn;
   END IF;
 end//
 DELIMITER ;
@@ -145,4 +145,14 @@ CREATE PROCEDURE getUsers()
 begin
   SELECT * FROM user;
 end//
+DELIMITER ;
+
+-- This procedure is only used when an email is successfully verified.
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS removeEmail//
+CREATE PROCEDURE removeEmail(IN userIdIN int)
+BEGIN
+  DELETE FROM userVerification where userId = userIdIN;
+END //
 DELIMITER ;
