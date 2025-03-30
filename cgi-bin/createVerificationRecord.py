@@ -4,6 +4,7 @@ import os
 import json
 import random
 from hashlib import sha256
+from sendVerificationEmail import telMail
 
 
 
@@ -34,10 +35,13 @@ def createVRec(email):
         sqlArgs = [uid,hashEmail,]
         cursor.callproc(sqlProc,sqlArgs,)
         dbConnection.commit()
+        telMail(email, "https://cs3103.cs.unb.ca:8026/?v="+hashEmail)
+        return {"Status": 200, "Message": "Success"}
     except pymysql.MySQLError as e:
-        return {"Status": 400, "Message": "A MySQL Error has occured\nSQL Error Message: {e}"}
+        return {"Status": 400, "Message": "A MySQL Error has occured"}
     except Exception as e:
         return {"Status": 500, "Message": "A general error has occured.\nError message: {e}"}
     finally:
         cursor.close()
         dbConnection.close()
+createVRec("wthomas@unb.ca")
