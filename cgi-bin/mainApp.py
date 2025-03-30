@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import datetime
+from hashlib import sha1
 import os
 from flask import Flask, jsonify, abort, request, make_response, session, render_template, redirect, url_for
 from flask_restful import reqparse, Resource, Api
