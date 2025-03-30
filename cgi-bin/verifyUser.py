@@ -42,4 +42,3 @@ def verifyUser(hash):
         cursor.close()
         dbConnection.close()
         
-print(verifyUser("a92a449c07a428afef713ef1764f2bcc6f6427d63c7894f11281d1a2a4df7b6c"))
