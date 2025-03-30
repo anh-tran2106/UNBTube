@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys
-from flask import Flask, jsonify, abort, request, make_response, session
+from flask import Flask, jsonify, abort, request, make_response, session, render_template
 from flask_restful import reqparse, Resource, Api
 from flask_session import Session
 import json
@@ -146,6 +146,13 @@ api.add_resource(SignIn, '/login')
 api.add_resource(logout, '/logout')
 api.add_resource(signUp, '/signup')
 api.add_resource(getUsers, '/users')
+
+@app.route("/")
+def frontend():
+    if 'username' in session:
+        return render_template("index.html")  # Show homepage for logged-in users
+    else:
+        return render_template("login.html")  # Show login page for guests
 
 if __name__ == "__main__":
 	#
