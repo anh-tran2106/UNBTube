@@ -38,11 +38,11 @@ DROP TABLE IF EXISTS video;
 CREATE TABLE video(
     videoId int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    title varchar(255) NOT NULL,
-    description varchar(1023) NOT NULL,
+    title varchar(256) NOT NULL,
+    description varchar(1024) NOT NULL,
     likes int NOT NULL,
     views int NOT NULL,
-    videoFile varchar(255) NOT NULL,
+    videoFile varchar(256) NOT NULL,
     created datetime NOT NULL,
     PRIMARY KEY (videoId),
     FOREIGN KEY (userId) REFERENCES user(userId)
@@ -66,7 +66,7 @@ CREATE TABLE comment(
     userId int NOT NULL,
     videoId int NOT NULL,
     parentCommentId int NOT NULL,
-    comment varchar(1023) NOT NULL,
+    comment varchar(1024) NOT NULL,
     created datetime NOT NULL,
     PRIMARY KEY (commentId),
     FOREIGN KEY (userId) REFERENCES user(userId),
@@ -89,7 +89,7 @@ DROP TABLE IF EXISTS playlist;
 CREATE TABLE playlist(
     playlistId int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    name varchar(255) NOT NULL,
+    name varchar(256) NOT NULL,
     created datetime NOT NULL,
     PRIMARY KEY (playlistId),
     FOREIGN KEY (userId) REFERENCES user(userId)

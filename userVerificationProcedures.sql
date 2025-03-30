@@ -22,10 +22,14 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS createEmail //
 
-CREATE PROCEDURE createEmail(IN userIdIn int, emailHashIn varchar(255))
+CREATE PROCEDURE createEmail(IN userIdIn int, emailHashIn varchar(256))
 begin
-  INSERT INTO userVerification (userID, emailHash, created) VALUES
-    (userIdIn, emailHashIn, NOW());
+  IF EXISTS(SELECT * FROM user WHERE userId = userIdIn)
+    THEN INSERT INTO userVerification (userId, emailHash, created) VALUES
+      (userIdIn, emailHashIn, NOW());
+  ELSE
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'user does not exist';
+  END IF;
 end//
 DELIMITER ;
 
@@ -35,6 +39,10 @@ DROP PROCEDURE IF EXISTS removeEmail //
 
 CREATE PROCEDURE removeEmail(IN userIdIn int)
 begin
-  DELETE FROM userVerification WHERE userId = userIdIn;
+  IF EXISTS(SELECT * FROM userVerification WHERE userId = userIdIn)
+    THEN DELETE FROM userVerification WHERE userId = userIdIn;
+  ELSE
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'user does not exist';
+  END IF;
 end//
 DELIMITER ;
