@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
+import os
 import sys
-from flask import Flask, jsonify, abort, request, make_response, session, render_template
+from flask import Flask, jsonify, abort, request, make_response, session, render_template, redirect, url_for
 from flask_restful import reqparse, Resource, Api
 from flask_session import Session
 import json
@@ -12,6 +13,7 @@ import ssl #include ssl libraries
 import verifyUser
 import createUser
 import signIn
+from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
 
@@ -138,14 +140,36 @@ class signUp(Resource):
 class getUsers(Resource):
 	def get(self):
 		l=1
+  
+class uploadVideo(Resource):
+	def get(self):
+		if 'username' in session:
+			return render_template('upload.html')
+		else:
+			abort(401)
+	def post(self):
+		if 'username' in session:
+			uploaded_file = request.files['file']
+			filename = secure_filename()
+			if filename != '':
+				file_ext = os.path.splitext(filename)[1]
+				if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+					abort(400)
+				uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+				return redirect(url_for('index.html'))
+			
 
-
+   
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 10240
+app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
+app.config['UPLOAD_PATH'] = "videosTest/"
 api = Api(app)
 api.add_resource(Root,'/verify')
 api.add_resource(SignIn, '/login')
 api.add_resource(logout, '/logout')
 api.add_resource(signUp, '/signup')
 api.add_resource(getUsers, '/users')
+api.add_resource(uploadVideo, '/upload')
 
 @app.route("/")
 def frontend():
