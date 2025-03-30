@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 import os
-import sys
 from flask import Flask, jsonify, abort, request, make_response, session, render_template, redirect, url_for
 from flask_restful import reqparse, Resource, Api
 from flask_session import Session
-import json
-from ldap3 import Server, Connection, ALL
-from ldap3.core.exceptions import *
-import pymysql
-import pymysql.cursors
 import ssl #include ssl libraries
 import verifyUser
 import createUser
