@@ -182,5 +182,5 @@ DROP PROCEDURE IF EXISTS getVideo() //
 CREATE PROCEDURE getVideo(IN vidIDIn int)
 BEGIN
   Select * from video where videoId = vidIDIn;
-END
+END //
 DELIMITER ;
