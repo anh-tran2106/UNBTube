@@ -101,7 +101,7 @@ CREATE TABLE playlist(
 -- ---------playlistEntry table----------
 DROP TABLE IF EXISTS playlistEntry;
 CREATE TABLE playlistEntry(
-    playlistId int NOT NULL AUTO_INCREMENT,
+    playlistId int NOT NULL,
     videoId int NOT NULL,
     PRIMARY KEY (playlistId),
     FOREIGN KEY (playlistId) REFERENCES playlist(playlistId),
