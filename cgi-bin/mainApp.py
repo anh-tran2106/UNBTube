@@ -142,21 +142,16 @@ class getUsers(Resource):
 		l=1
   
 class uploadVideo(Resource):
-	def get(self):
-		if 'username' in session:
-			return render_template('upload.html')
-		else:
-			abort(401)
 	def post(self):
 		if 'username' in session:
 			uploaded_file = request.files['file']
-			filename = secure_filename()
+			filename = secure_filename(uploaded_file.filename)
 			if filename != '':
 				file_ext = os.path.splitext(filename)[1]
 				if file_ext not in app.config['UPLOAD_EXTENSIONS']:
 					abort(400)
 				uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-				return redirect(url_for('index.html'))
+				return redirect('/')
 			
 
    
@@ -178,9 +173,13 @@ def frontend():
 	else:
 		return render_template("login.html")  # Show login page for guests
 
-@app.route("/signup")
-def signup_frontend():
-	return render_template("signup.html")  # Show signup page for guests
+@app.route("/upload")
+def uploadPage():
+	if 'username' in session:
+		return render_template("upload.html")
+	else:
+		abort(401)
+
 
 if __name__ == "__main__":
 	#
