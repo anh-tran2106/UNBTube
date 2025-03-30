@@ -50,7 +50,7 @@ def not_found(error):
 
 class Root(Resource):
 	def get(self):
-		return app.send_static_file('index.html')
+		return request.args.get('v')
 
 class SignIn(Resource):
 	def post(self):
