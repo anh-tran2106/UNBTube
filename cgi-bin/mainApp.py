@@ -173,10 +173,14 @@ def frontend():
 	else:
 		return render_template("login.html")  # Show login page for guests
 
+@app.route("/signup")
+ def signup_frontend():
+ 	return render_template("signup.html")
+
 @app.route("/upload")
 def uploadPage():
 	if 'username' in session:
-		return render_template("upload.html")
+		return render_template("upload.html") 
 	else:
 		abort(401)
 
