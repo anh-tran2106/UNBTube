@@ -15,6 +15,7 @@ import createUser
 import signIn
 import uploadVideosDB
 import getUserID
+import getAllVideosDB
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -142,6 +143,9 @@ class signUp(Resource):
 class getUsers(Resource):
 	def get(self):
 		l=1
+class getAllVideos(Resource):
+    def get(self):
+        return jsonify(getAllVideosDB.getAllVideos())
   
 class uploadVideo(Resource):
 	def post(self):
@@ -156,7 +160,7 @@ class uploadVideo(Resource):
 				os.makedirs(otherDir)
 				uploaded_file.save(os.path.join(otherDir ,filename))
 				videoInfo = request.form.to_dict()
-				uploadVideoDB.uploadVideo(otherDir + filename, videoInfo['title'], videoInfo['desc'], getUserID.getUserID(session.get('username')))
+				uploadVideosDB.uploadVideo(otherDir + filename, videoInfo['title'], videoInfo['desc'], getUserID.getUserID(session.get('username')))
 				return redirect('/')
 			
 			
@@ -172,6 +176,7 @@ api.add_resource(logout, '/logout')
 api.add_resource(signUp, '/signup')
 api.add_resource(getUsers, '/users')
 api.add_resource(uploadVideo, '/upload')
+api.add_resource(getAllVideos, '/videos')
 
 @app.route("/")
 def frontend():
