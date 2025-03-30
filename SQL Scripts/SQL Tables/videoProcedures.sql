@@ -175,3 +175,12 @@ begin
   SELECT * FROM video;
 end//
 DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS getVideo() //
+
+CREATE PROCEDURE getVideo(IN vidIDIn int)
+BEGIN
+  Select * from video where videoId = vidIDIn;
+END
+DELIMITER ;
