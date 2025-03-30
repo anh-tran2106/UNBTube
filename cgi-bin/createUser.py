@@ -21,7 +21,6 @@ def CreateUser(username, email, password):
     for i in range(16):
         chars.append(random.choice(alphabet))
         salt = "".join(chars)
-    print("Got here")
     hashPass = sha256((salt.encode('utf-8') + password.encode('utf-8'))).hexdigest()
     sqlProc = 'createUser'
     sqlArgs = [username, email, hashPass, salt,]
@@ -37,7 +36,6 @@ def CreateUser(username, email, password):
     finally:
         cursor.close()
         dbConnection.close()
-
 
 
 
