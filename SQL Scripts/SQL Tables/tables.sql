@@ -50,11 +50,12 @@ CREATE TABLE video(
 );
 
 -- -----------videoLike table------------
+-- 0 for like 1 for dislike
 DROP TABLE IF EXISTS videoLike;
 CREATE TABLE videoLike(
     userId int NOT NULL,
     videoId int NOT NULL,
-    dislike boolean NOT NULL, -- 0 for like 1 for dislike
+    dislike boolean NOT NULL,
     PRIMARY KEY (userId, videoId),
     FOREIGN KEY (userId) REFERENCES user(userId),
     FOREIGN KEY (videoId) REFERENCES video(videoId)
@@ -66,7 +67,7 @@ CREATE TABLE comment(
     commentId int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
     videoId int NOT NULL,
-    parentCommentId int NOT NULL,
+    parentCommentId int,
     comment varchar(1024) NOT NULL,
     created datetime NOT NULL,
     PRIMARY KEY (commentId),
@@ -75,14 +76,15 @@ CREATE TABLE comment(
 );
 
 -- ---------commentLike table------------
+-- 0 for like 1 for dislike
 DROP TABLE IF EXISTS commentLike;
 CREATE TABLE commentLike(
     userId int NOT NULL,
-    videoId int NOT NULL,
-    dislike boolean NOT NULL, -- 0 for like 1 for dislike
-    PRIMARY KEY (userId, videoId),
+    commentId int NOT NULL,
+    dislike boolean NOT NULL,
+    PRIMARY KEY (userId, commentId),
     FOREIGN KEY (userId) REFERENCES user(userId),
-    FOREIGN KEY (videoId) REFERENCES video(videoId)
+    FOREIGN KEY (commentId) REFERENCES comment(commentId)
 );
 
 -- ----------playlist table--------------
