@@ -146,7 +146,12 @@ class getUsers(Resource):
 class getAllVideos(Resource):
     def get(self):
         return jsonify(getAllVideosDB.getAllVideos())
-  
+
+class getVideoDB(Resource):
+    def get(self):
+        vidID = request.args.get('v')
+        return jsonify(getVideo.getVideo(vidID))
+
 class uploadVideo(Resource):
 	def post(self):
 		if 'username' in session:
@@ -177,6 +182,7 @@ api.add_resource(signUp, '/signup')
 api.add_resource(getUsers, '/users')
 api.add_resource(uploadVideo, '/upload')
 api.add_resource(getAllVideos, '/videos')
+api.add_resource(getVideoDB, '/watch')
 
 @app.route("/")
 def frontend():
