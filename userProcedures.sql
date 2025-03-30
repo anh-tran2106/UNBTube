@@ -8,6 +8,15 @@ begin
 end//
 DELIMITER ;
 
+-- --------------------getUserID--------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS getUID //
+CREATE PROCEDURE getUID(IN emailIn varchar(256))
+begin
+  SELECT userID from user where email=emailIn;
+end//
+DELIMITER ;
+
 -- ---------------get(hashed)Password--------------------
 DELIMITER //
 DROP PROCEDURE IF EXISTS getPassword //
@@ -102,13 +111,13 @@ DROP PROCEDURE IF EXISTS createUser //
 
 CREATE PROCEDURE createUser(IN usernameIn varchar(255), emailIn varchar(255), passwordIn varchar(255), saltIn varchar(256))
 begin
- IF(SELECT * FROM user WHERE email = emailIn)
+ IF EXISTS(SELECT * FROM user WHERE email = emailIn)
     THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'email already in use';
  ELSE
-    IF(SELECT * FROM user WHERE username = usernameIn)
+    IF EXISTS(SELECT * FROM user WHERE username = usernameIn)
       THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'username already in use';
     ELSE 
-      INSERT INTO user (username, email, pswd, salt, verified, created) VALUES (usernameIn, emailIn, passwordIn, saltIn, 0, CURDATE());
+      INSERT INTO user (username, email, pswd, salt, verified, created) VALUES (usernameIn, emailIn, passwordIn, saltIn, 0, NOW());
     END IF;
   END IF;
 end//

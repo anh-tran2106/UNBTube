@@ -22,10 +22,10 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS createEmail //
 
-CREATE PROCEDURE createEmail(IN userIdIn int, emailIn varchar(255), emailHashIn varchar(255))
+CREATE PROCEDURE createEmail(IN userIdIn int, emailHashIn varchar(255))
 begin
-  INSERT INTO userVerification (email, emailHash, created) VALUES
-    (userIdIn, emailIn, emailHashIn, CURDATE());
+  INSERT INTO userVerification (userID, emailHash, created) VALUES
+    (userIdIn, emailHashIn, NOW());
 end//
 DELIMITER ;
 
