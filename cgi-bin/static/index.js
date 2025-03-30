@@ -3,7 +3,7 @@ var app = new Vue({
 
   //------- data --------
   data: {
-    serviceURL: "https://cs3103.cs.unb.ca:8027",
+    serviceURL: "https://cs3103.cs.unb.ca:8026",
     authenticated: false,
     loggedIn: null,
     videos: [], // Store fetched videos
