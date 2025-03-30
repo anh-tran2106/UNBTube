@@ -44,4 +44,3 @@ def createVRec(email):
     finally:
         cursor.close()
         dbConnection.close()
-createVRec("wthomas@unb.ca")
