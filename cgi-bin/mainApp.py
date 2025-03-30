@@ -146,11 +146,19 @@ class getUsers(Resource):
 class getAllVideos(Resource):
     def get(self):
         return jsonify(getAllVideosDB.getAllVideos())
-
 class getVideoDB(Resource):
-    def get(self):
-        vidID = request.args.get('v')
-        return jsonify(getVideo.getVideo(vidID))
+	def get(self):
+		if not request.json:
+			abort(400) # bad request
+		# Parse the json
+		parser = reqparse.RequestParser()
+		try:
+ 			# Check for required attributes in json document, create a dictionary
+			parser.add_argument('vidID', type=str, required=True)
+			request_params = parser.parse_args()
+		except:
+			abort(400)
+		return jsonify(getVideoDB.getVideo(request_params['vidID']))
 
 class uploadVideo(Resource):
 	def post(self):
