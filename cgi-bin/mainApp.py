@@ -13,6 +13,8 @@ import ssl #include ssl libraries
 import verifyUser
 import createUser
 import signIn
+import uploadVideoDB
+import getUserID
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -150,8 +152,13 @@ class uploadVideo(Resource):
 				file_ext = os.path.splitext(filename)[1]
 				if file_ext not in app.config['UPLOAD_EXTENSIONS']:
 					abort(400)
-				uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+				otherDir = app.config['UPLOAD_PATH'] + session.get("username") + "/" + sha1(((datetime.datetime.now()).isoformat()).encode('utf-8')).hexdigest() + "/"
+				os.makedirs(otherDir)
+				uploaded_file.save(os.path.join(otherDir ,filename))
+				videoInfo = request.form.to_dict()
+				uploadVideoDB.uploadVideo(otherDir + filename, videoInfo['title'], videoInfo['desc'], getUserID.getUserID(session.get('username')))
 				return redirect('/')
+			
 			
 
    
