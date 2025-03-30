@@ -9,7 +9,8 @@ from ldap3.core.exceptions import *
 import pymysql
 import pymysql.cursors
 import ssl #include ssl libraries
-from getUsers import getUsers
+import verifyUser
+import createUser
 
 import settings # Our server and db settings, stored in settings.py
 
@@ -50,7 +51,8 @@ def not_found(error):
 
 class Root(Resource):
 	def get(self):
-		return request.args.get('v')
+		hashString = request.args.get('v')
+		return verifyUser.verifyUser(hashString)
 
 class SignIn(Resource):
 	def post(self):
@@ -124,20 +126,21 @@ class signUp(Resource):
 
 		# Parse the json
 			parser = reqparse.RequestParser()
-			try:
-				# Check for required attributes in json document, create a dictionary
-				parser.add_argument('username', type=str, required=True)
-				parser.add_argument('password', type=str, required=True)
-				parser.add_argument('email', type = str, required=True)
-				request_params = parser.parse_args()
-			except:
-				abort(400) # bad request
+
+			# Check for required attributes in json document, create a dictionary
+			parser.add_argument('username', type=str, required=True)
+			parser.add_argument('password', type=str, required=True)
+			parser.add_argument('email', type = str, required=True)
+			request_params = parser.parse_args()
 			if '@' not in request_params['email']:
 				abort(400)
 			if len(request_params['username']) > 50 or len(request_params['username']) == 0:
 				abort(400)
-			if len(request_params['password']) > 255 or len(request_params['username']) < 8:
+			if len(request_params['password']) > 255 or len(request_params['password']) < 8:
 				abort(400)
+			return make_response(jsonify(createUser.CreateUser(request_params["username"], request_params["email"], request_params["password"])))
+
+
 
 class getUsers(Resource):
 	def get(self):
