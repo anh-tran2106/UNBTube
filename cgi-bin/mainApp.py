@@ -150,3 +150,17 @@ api.add_resource(SignIn, '/login')
 api.add_resource(logout, '/logout')
 api.add_resource(signUp, '/signup')
 api.add_resource(getUsers, '/users')
+
+if __name__ == "__main__":
+	#
+	# You need to generate your own certificates. To do this:
+	#	1. cd to the directory of this app
+	#	2. run the makeCert.sh script and answer the questions.
+	#	   It will by default generate the files with the same names specified below.
+	#
+	context = ('cert.pem', 'key.pem') # Identify the certificates you've generated.
+	app.run(
+		host=settings.APP_HOST,
+		port=settings.APP_PORT,
+		ssl_context=context,
+		debug=settings.APP_DEBUG)
