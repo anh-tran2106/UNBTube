@@ -2,24 +2,69 @@
 <html>
   <head>
     <title>UNBTube</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div class="container-fluid" id="app">
-      <div class="jumbotron jumbotron-fluid text-center">
-        <h1>This is the Homepage</h1>
-        <p><em>Stuff here</em></p>
-      <div v-if="!authenticated">
-        <button type="button" class="btn btn-outline-danger" v-on:click="logout()">Logout</button>
-        <button type="button" class="btn btn-outline-primary" v-on:click="fetchUsers()">List Users</button>
+      <!-- Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-body-tertiary">
+            <div class="container-fluid justify-content-between">
+                <!-- Left elements -->
+                <div class="d-flex">
+                    <a class="navbar-brand" href="#">UNBTube</a>
+                </div>
+                <!-- Left elements -->
+            
+                <!-- Center elements -->
+                <div class="input-group w-50">
+                  <input type="text" class="form-control" placeholder="Search">
+                  <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- Center elements -->
+            
+                <!-- Right elements -->
+                <div class="navbar-nav flex-row">
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#">Edit Profile</a>
+                        <a class="dropdown-item" href="#">Upload Video</a>
+                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" v-on:click="logout()">Log out</a>
+                      </div>
+                    </li>
+                </div>
+                <!-- Right elements -->
+            </div>
+        </nav>
+        <!-- Navbar -->
+
+      <div class="jumbotron text-center">
+        <!-- Video List -->
+
       </div>
+
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/static/index.js" ></script>
-  <link rel="stylesheet" href="/static/main.css"/>
-</body>
+
+    <!-- Vue & Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="/static/index.js"></script>
+    <link rel="stylesheet" href="/static/main.css"/>
+
+  </body>
 </html>

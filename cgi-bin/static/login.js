@@ -23,7 +23,7 @@ var app = new Vue({
               if (response.data.status == "success") {
                 this.authenticated = true;
                 this.loggedIn = response.data.user_id;
-                window.location.href = "/home"; // Redirect to the Homepage
+                location.reload();
               }
           })
           .catch(e => {

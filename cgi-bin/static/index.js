@@ -13,7 +13,6 @@ var app = new Vue({
     },
     methods: {
       logout() {
-        alert("No magic on the server yet. You'll have to write the logout code there.");
         axios
         .delete(this.serviceURL+"/logout")
         .then(response => {
