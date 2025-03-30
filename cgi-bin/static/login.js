@@ -3,7 +3,7 @@ var app = new Vue({
   
     //------- data --------
     data: {
-      serviceURL: "https://cs3103.cs.unb.ca:8026",
+      serviceURL: "https://cs3103.cs.unb.ca:8027",
       authenticated: false,
       loggedIn: null,
       input: {
@@ -15,7 +15,7 @@ var app = new Vue({
       login() {
         if (this.input.username != "" && this.input.password != "") {
           axios
-          .post(this.serviceURL+"/signin", {
+          .post(this.serviceURL+"/login", {
               "username": this.input.username,
               "password": this.input.password
           })
@@ -39,7 +39,7 @@ var app = new Vue({
       logout() {
         alert("No magic on the server yet. You'll have to write the logout code there.");
         axios
-        .delete(this.serviceURL+"/signin")
+        .delete(this.serviceURL+"/login")
         .then(response => {
             location.reload();
         })
