@@ -174,7 +174,7 @@ def frontend():
 		return render_template("login.html")  # Show login page for guests
 
 @app.route("/signup")
- def signup_frontend():
+def signup_frontend():
  	return render_template("signup.html")
 
 @app.route("/upload")
