@@ -17,6 +17,15 @@ begin
 end//
 DELIMITER ;
 
+-- --------------------getUser--------------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS getUser //
+CREATE PROCEDURE getUser(IN usernameIn varchar(256))
+begin
+  SELECT * from user where username=usernameIn;
+end//
+DELIMITER ;
+
 -- ---------------get(hashed)Password--------------------
 DELIMITER //
 DROP PROCEDURE IF EXISTS getPassword //
