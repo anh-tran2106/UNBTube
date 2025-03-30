@@ -154,6 +154,10 @@ def frontend():
 	else:
 		return render_template("login.html")  # Show login page for guests
 
+@app.route("/signup")
+def signup_frontend():
+	return render_template("signup.html")  # Show signup page for guests
+
 if __name__ == "__main__":
 	#
 	# You need to generate your own certificates. To do this:

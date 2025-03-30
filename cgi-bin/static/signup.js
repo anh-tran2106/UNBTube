@@ -4,38 +4,38 @@ var app = new Vue({
     //------- data --------
     data: {
       serviceURL: "https://cs3103.cs.unb.ca:8026",
-      authenticated: false,
-      loggedIn: null,
       input: {
         username: "",
+        email:"",
         password: ""
       }
     },
     methods: {
-      login() {
-        if (this.input.username != "" && this.input.password != "") {
+      signup() {
+        if (this.input.username != "" && this.input.email != "" && this.input.password != "") {
           axios
-          .post(this.serviceURL+"/login", {
+          .post(this.serviceURL+"/signup", {
               "username": this.input.username,
+              "email":this.input.email,
               "password": this.input.password
           })
           .then(response => {
               if (response.data.status == "success") {
-                this.authenticated = true;
-                this.loggedIn = response.data.user_id;
-                window.location.href = "/home"; // Redirect to the Homepage
+                alert("Account created successfully");
+                window.location.href = "/"; // Redirect back to login page
               }
           })
           .catch(e => {
-              alert("The username or password was incorrect, try again");
+              alert("There was an error in the sign-up process, please try again");
               this.input.password = "";
               console.log(e);
           });
         } else {
-          alert("A username and password must be present");
+          alert("A username, email and password must be present");
         }
       },
     }
     //------- END methods --------
+  
   });
   
