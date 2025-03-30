@@ -22,13 +22,14 @@ CREATE TABLE userVerification(
 );
 
 -- ---------subscriber table-------------
+-- subChannelId = Channel userId is subscribed to
+-- userId = Channel that is subscribed to subChannelId
 DROP TABLE IF EXISTS subscriber;
 CREATE TABLE subscriber(
-    subscriberId int NOT NULL AUTO_INCREMENT,
     subChannelId int NOT NULL,
     userId int NOT NULL,
     created datetime NOT NULL,
-    PRIMARY KEY (subscriberId),
+    PRIMARY KEY (subChannelId, userId),
     FOREIGN KEY (subChannelId) REFERENCES user(userId),
     FOREIGN KEY (userId) REFERENCES user(userId)
 );
