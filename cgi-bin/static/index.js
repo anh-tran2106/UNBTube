@@ -1,5 +1,6 @@
 var app = new Vue({
   el: "#app",
+  delimiters: ["[[", "]]"], // Change delimiters to avoid Jinja conflict
 
   //------- data --------
   data: {
