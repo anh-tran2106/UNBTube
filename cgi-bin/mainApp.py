@@ -15,6 +15,7 @@ import getAllVideosDB
 import getVideo
 import addComments
 import getAllComments
+import getUserVideos
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -200,8 +201,34 @@ class comments(Resource):
 			make_response(jsonify(retval, 200))
 		except:
 			abort(400)
+   
+class userVideos(Resource):
+	def get(self):
+		if not request.json:
+			abort(400)
+		parser = reqparse.RequestParser()
+		try:
+ 			# Check for required attributes in json document, create a dictionary
+			parser.add_argument('userID', type=str, required=True)
+			request_params = parser.parse_args()
+			retVal = getUserVideos.getAllVideos(request_params["userID"])
+			return make_response(jsonify(retVal), 200)
+		except:
+			abort(400)
 			
-
+class getVideoDB(Resource):
+	def get(self):
+		if not request.json:
+			abort(400) # bad request
+		# Parse the json
+		parser = reqparse.RequestParser()
+		try:
+ 			# Check for required attributes in json document, create a dictionary
+			parser.add_argument('vidID', type=str, required=True)
+			request_params = parser.parse_args()
+		except:
+			abort(400)
+		return make_response(jsonify(getVideo.getVideo(request_params['vidID'])), 200)
    
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 10240
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
@@ -216,6 +243,7 @@ api.add_resource(uploadVideo, '/upload')
 api.add_resource(getAllVideos, '/videos')
 api.add_resource(getVideoDB, '/watch')
 api.add_resource(comments, '/comments')
+api.add_resource(userVideos, '/user', '/user/<userID>')
 
 @app.route("/")
 def frontend():
