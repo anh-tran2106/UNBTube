@@ -154,7 +154,7 @@ class getVideoDB(Resource):
 			request_params = parser.parse_args()
 		except:
 			abort(400)
-		return jsonify(getVideoDB.getVideo(request_params['vidID']))
+		return make_response(jsonify(getVideoDB.getVideo(request_params['vidID'])))
 
 class uploadVideo(Resource):
 	def post(self):
