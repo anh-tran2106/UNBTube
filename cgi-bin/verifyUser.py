@@ -11,7 +11,7 @@ def verifyUser(hash):
                                 database=settings.DB_DATABASE,
                                 charset='utf8mb4',
                                 cursorclass= pymysql.cursors.DictCursor)
-    sqlProc = "getUser"
+    sqlProc = "getUserVerification"
     sqlArgs = [hash,]
     try:
         cursor = dbConnection.cursor()
