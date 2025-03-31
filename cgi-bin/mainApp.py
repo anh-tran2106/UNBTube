@@ -171,7 +171,32 @@ class uploadVideo(Resource):
 				videoInfo = request.form.to_dict()
 				uploadVideosDB.uploadVideo(otherDir + filename, videoInfo['title'], videoInfo['desc'], getUserID.getUserID(session.get('username')))
 				return redirect('/')
-			
+
+class comments(Resource):
+	def get(self):
+		if not request.json:
+			abort(400)
+		parser = reqparse.RequestParser()
+		try:
+			parser.add_argument('vidID', type=str, required=True)
+			request_parms = parser.parse_args()
+			retVal = getAllComments.getAllComments(request_parms)
+		except:
+			abort(400)
+	def post(self):
+		if not request.json:
+			abort(400)
+		parser = reqparse.RequestParser()
+		try:
+			parser.add_argument('vidID', type=str, required=True)
+			parser.add_argument('userID', type=str, required=True)
+			parser.add_argument('parentID', type=str, required=False)
+			parser.add_argument('comment', type=str, required=True)
+			request_parms = parser.parse_args()
+			retval = addComments.addComment(request_parms['userID'],request_parms['parentID'],request_parms['comment'])
+			make_response(jsonify(retval, 200))
+		except:
+			abort(400)
 			
 
    
@@ -187,6 +212,7 @@ api.add_resource(getUsers, '/users')
 api.add_resource(uploadVideo, '/upload')
 api.add_resource(getAllVideos, '/videos')
 api.add_resource(getVideoDB, '/watch')
+api.add_resource(comments, '/comments')
 
 @app.route("/")
 def frontend():
