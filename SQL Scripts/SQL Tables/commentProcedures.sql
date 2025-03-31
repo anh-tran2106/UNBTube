@@ -86,11 +86,11 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS createComment //
 
-CREATE PROCEDURE createComment(IN userIdIn int, videoIdIn int, commentIn varchar(1024))
+CREATE PROCEDURE createComment(IN userIdIn int, IN videoIdIn int, IN commentIn varchar(1024))
 begin
   IF EXISTS(SELECT * FROM user WHERE userId = userIdIn)
     THEN IF EXISTS(SELECT * FROM video WHERE videoId = videoIdIn)
-      THEN INSERT INTO video (userId, videoId, comment, created) VALUES (userIdIn, videoIdIn, commentIn, NOW());
+      THEN INSERT INTO comment (userId, videoId, comment, created) VALUES (userIdIn, videoIdIn, commentIn, NOW());
     ELSE
       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'video does not exist';
     END IF;
@@ -104,11 +104,11 @@ DELIMITER ;
 DELIMITER //
 DROP PROCEDURE IF EXISTS createReply //
 
-CREATE PROCEDURE createReply(IN userIdIn int, videoIdIn int, parentComentIdIn int, commentIn varchar(1024))
+CREATE PROCEDURE createReply(IN userIdIn int, IN videoIdIn int, IN parentCommentIdIn int, commentIn varchar(1024))
 begin
   IF EXISTS(SELECT * FROM user WHERE userId = userIdIn)
     THEN IF EXISTS(SELECT * FROM video WHERE videoId = videoIdIn)
-      THEN INSERT INTO video (userId, videoId, parentCommentId, comment, created) VALUES (userIdIn, videoIdIn, parentCommentIdIn, commentIn, NOW());
+      THEN INSERT INTO comment (userId, videoId, parentCommentId, comment, created) VALUES (userIdIn, videoIdIn, parentCommentIdIn, commentIn, NOW());
     ELSE
       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'video does not exist';
     END IF;
@@ -130,4 +130,13 @@ begin
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'comment does not exist';    
   END IF;
 end//
+DELIMITER ;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS getVideoComments //
+
+CREATE PROCEDURE getVideoComments(IN videoIDIn int)
+BEGIN
+  SELECT * FROM comments WHERE videoId = videoIDIn;
+END //
 DELIMITER ;
