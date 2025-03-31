@@ -12,6 +12,9 @@ import signIn
 import uploadVideosDB
 import getUserID
 import getAllVideosDB
+import getVideo
+import addComments
+import getAllComments
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
