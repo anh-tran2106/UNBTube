@@ -177,6 +177,15 @@ end//
 DELIMITER ;
 
 DELIMITER //
+DROP PROCEDURE IF EXISTS getVideosUser //
+
+CREATE PROCEDURE getVideosUser(IN userIdIN int)
+begin
+  SELECT * FROM video where userId = userIdIN;
+end//
+DELIMITER ;
+
+DELIMITER //
 DROP PROCEDURE IF EXISTS getVideo() //
 
 CREATE PROCEDURE getVideo(IN vidIDIn int)
