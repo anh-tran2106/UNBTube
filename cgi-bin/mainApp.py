@@ -232,7 +232,7 @@ class getVideoDB(Resource):
    
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 10240
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
-app.config['UPLOAD_PATH'] = "videosTest/"
+app.config['UPLOAD_PATH'] = "static/videosTest/"
 api = Api(app)
 api.add_resource(Root,'/verify')
 api.add_resource(SignIn, '/login')
@@ -262,6 +262,7 @@ def uploadPage():
 		return render_template("upload.html") 
 	else:
 		abort(401)
+  
 
 
 if __name__ == "__main__":
