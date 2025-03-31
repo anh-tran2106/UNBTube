@@ -141,7 +141,7 @@ class getUsers(Resource):
 		l=1
 class getAllVideos(Resource):
     def get(self):
-        return make_response(jsonify(getAllVideosDB.getAllVideos()))
+        return make_response(jsonify(getAllVideosDB.getAllVideos()), 200)
 class getVideoDB(Resource):
 	def get(self):
 		if not request.json:
