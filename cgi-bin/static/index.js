@@ -4,7 +4,7 @@ var app = new Vue({
 
   //------- data --------
   data: {
-    serviceURL: "https://cs3103.cs.unb.ca:8026",
+    serviceURL: "https://cs3103.cs.unb.ca:8027",
     authenticated: false,
     loggedIn: null,
     videos: [], // Store fetched videos
@@ -31,7 +31,8 @@ var app = new Vue({
       axios
       .get(this.serviceURL + "/videos")
       .then(response => {
-        this.videos = response.data.videos; // Assuming API returns { videos: [...] }
+        console.log("Fetched videos:", response.data);
+        this.videos = response.data; // Assuming API returns { videos: [...] }
       })
       .catch(e => {
         console.log("Error fetching videos:", e);
