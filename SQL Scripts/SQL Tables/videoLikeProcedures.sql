@@ -53,3 +53,17 @@ begin
   END IF;
 end//
 DELIMITER ;
+
+-- ---------------------getTotalLikes---------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS getTotalLikes //
+
+CREATE PROCEDURE getTotalLikes(IN videoIdIn int, OUT likes int)
+begin
+  IF EXISTS(SELECT * FROM video WHERE videoId = videoIdIn)
+    THEN SET likes = (SELECT COUNT(*) FROM videoLike WHERE videoId = videoIdIn AND dislike = 1) - (SELECT COUNT(*) FROM videoLike WHERE videoId = videoIdIn AND dislike = 0);
+  ELSE
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'video does not exist';
+  END IF;
+end//
+DELIMITER ;
