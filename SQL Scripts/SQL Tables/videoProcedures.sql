@@ -70,9 +70,9 @@ DELIMITER ;
 
 -- ----------------------getVideoByTitle-----------------------
 DELIMITER //
-DROP PROCEDURE IF EXISTS getVideoByTitle //
+DROP PROCEDURE IF EXISTS getVideosByTitle //
 
-CREATE PROCEDURE getVideoByTitle(IN string varchar(256))
+CREATE PROCEDURE getVideosByTitle(IN string varchar(256))
 begin
   SELECT * FROM video WHERE title like CONCAT('%', string, '%');
 end//
