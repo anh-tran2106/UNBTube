@@ -16,6 +16,7 @@ import getVideo
 import addComments
 import getAllComments
 import getUserVideos
+import findVideos
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -138,6 +139,17 @@ class signUp(Resource):
 				abort(400)
 			return make_response(jsonify(createUser.CreateUser(request_params["username"], request_params["email"], request_params["password"])))
 
+class search(Resource):
+	def get(self):
+		if not request.json:
+			abort(400)
+		parser = reqparse.RequestParser()
+		try:
+			parser.add_argument('searchTerm', type=str, required=True)
+			request_parms = parser.parse_args()
+			retVal = findVideos.findVideos(request_parms['searchTerm'])
+		except:
+			abort(400)
 
 
 class getUsers(Resource):
@@ -243,6 +255,7 @@ api.add_resource(getAllVideos, '/videos')
 api.add_resource(getVideoDB, '/watch')
 api.add_resource(comments, '/comments')
 api.add_resource(userVideos, '/user', '/user/<userID>')
+api.add_argument(search, '/search')
 
 @app.route("/")
 def frontend():
@@ -261,7 +274,7 @@ def uploadPage():
 		return render_template("upload.html") 
 	else:
 		abort(401)
-  
+
 
 
 if __name__ == "__main__":
