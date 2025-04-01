@@ -2,9 +2,21 @@
 DELIMITER //
 DROP PROCEDURE IF EXISTS getUploader //
 
-CREATE PROCEDURE getUploader(IN videoIdIn int)
+CREATE PROCEDURE getUploader(IN videoIdIn int, OUT uploaderId int)
 begin
-  SELECT userId FROM video WHERE videoId = videoIdIn;
+  SELECT userId INTO uploaderId FROM video WHERE videoId = videoIdIn;
+end//
+DELIMITER ;
+
+-- --------------------getUploaderName-----------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS getUploaderName //
+
+CREATE PROCEDURE getUploaderName(IN videoIdIn int)
+begin
+  DECLARE uploaderId int;
+  CALL getUploader(videoIdIn, uploaderId);
+  SELECT username FROM user WHERE userId = uploaderId;
 end//
 DELIMITER ;
 
