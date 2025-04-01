@@ -24,18 +24,22 @@ def CreateUser(username, email, password):
     hashPass = sha256((salt.encode('utf-8') + password.encode('utf-8'))).hexdigest()
     sqlProc = 'createUser'
     sqlArgs = [username, email, hashPass, salt,]
+    retVal = ''
     try:
         cursor = dbConnection.cursor()
         cursor.callproc(sqlProc, sqlArgs)
         dbConnection.commit()
-        print(createVRec(email))
+        createVRec(email)
+        retVal = {"Status": 200, "Message": "Account Created Successfully"}
     except pymysql.MySQLError as e:
-        return {"Status": 400, "Message": "A MySQL Error has occured\nSQL Error Message: {e}"}
+        retVal = {"Status": 400, "Message": "A MySQL Error has occured", "Error Message": e}
+        return 
     except Exception as e:
-        return {"Status": 500, "Message": "A general error has occured.\nError message: {e}"}
+        return {"Status": 500, "Message": "A general error has occured", "Error Message": e}
     finally:
         cursor.close()
         dbConnection.close()
+    return retVal
 
 
 
