@@ -68,6 +68,16 @@ begin
 end//
 DELIMITER ;
 
+-- ----------------------getVideoByTitle-----------------------
+DELIMITER //
+DROP PROCEDURE IF EXISTS getVideoByTitle //
+
+CREATE PROCEDURE getVideoByTitle(IN string varchar(256))
+begin
+  SELECT * FROM video WHERE title like CONCAT('%', string, '%');
+end//
+DELIMITER ;
+
 -- ----------------------setTitle-----------------------
 DELIMITER //
 DROP PROCEDURE IF EXISTS setTitle //
