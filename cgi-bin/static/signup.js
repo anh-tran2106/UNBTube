@@ -20,7 +20,7 @@ var app = new Vue({
               "password": this.input.password
           })
           .then(response => {
-              if (response.data.status == "success") {
+              if (response.data.Status == "200") {
                 alert("Account created successfully");
                 window.location.href = "/"; // Redirect back to login page
               }
