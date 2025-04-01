@@ -230,7 +230,6 @@ class getVideoDB(Resource):
 			abort(400)
 		return make_response(jsonify(getVideo.getVideo(request_params['vidID'])), 200)
    
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 10240
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
 app.config['UPLOAD_PATH'] = "static/videosTest/"
 api = Api(app)
