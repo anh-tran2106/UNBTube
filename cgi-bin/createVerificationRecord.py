@@ -35,7 +35,7 @@ def createVRec(email):
         sqlArgs = [uid,hashEmail,]
         cursor.callproc(sqlProc,sqlArgs,)
         dbConnection.commit()
-        telMail(email, "https://cs3103.cs.unb.ca:8026/?v="+hashEmail)
+        telMail(email, "https://cs3103.cs.unb.ca:8026/verify?v="+hashEmail)
         return {"Status": 200, "Message": "Success"}
     except pymysql.MySQLError as e:
         return {"Status": 400, "Message": "A MySQL Error has occured"}
