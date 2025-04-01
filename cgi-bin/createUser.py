@@ -33,9 +33,8 @@ def CreateUser(username, email, password):
         retVal = {"Status": 200, "Message": "Account Created Successfully"}
     except pymysql.MySQLError as e:
         retVal = {"Status": 400, "Message": "A MySQL Error has occured", "Error Message": e}
-        return 
     except Exception as e:
-        return {"Status": 500, "Message": "A general error has occured", "Error Message": e}
+        retVal = {"Status": 500, "Message": "A general error has occured", "Error Message": e}
     finally:
         cursor.close()
         dbConnection.close()
