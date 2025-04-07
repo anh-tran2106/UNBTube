@@ -9,11 +9,11 @@ def findVideos(search_term):
                         charset='utf8mb4',
                         cursorclass= pymysql.cursors.DictCursor)
     sqlProc = "getVideosByTitle"
-    sqlProc = search_term
+    sqlArgs = [search_term,]
     data = ""
     try:
         cursor = dbConnection.cursor()
-        cursor.callproc(sqlProc)
+        cursor.callproc(sqlProc, sqlArgs)
         dbConnection.commit()
         data = cursor.fetchall()
     except pymysql.MySQLError as e:
@@ -24,4 +24,5 @@ def findVideos(search_term):
         cursor.close()
         dbConnection.close()
     return data
+
 

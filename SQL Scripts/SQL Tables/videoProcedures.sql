@@ -86,7 +86,7 @@ DROP PROCEDURE IF EXISTS getVideosByTitle //
 
 CREATE PROCEDURE getVideosByTitle(IN string varchar(256))
 begin
-  select username, title, description from video RIGHT JOIN user on video.userId = user.userId
+  select username, title, description, videoFile from video RIGHT JOIN user on video.userId = user.userId
     where username like concat('%', string, '%') OR title like concat('%', string, '%');
 end//
 DELIMITER ;

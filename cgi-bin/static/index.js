@@ -4,7 +4,7 @@ var app = new Vue({
 
   //------- data --------
   data: {
-    serviceURL: "https://cs3103.cs.unb.ca:8026",
+    serviceURL: "https://cs3103.cs.unb.ca:8000",
     authenticated: false,
     loggedIn: null,
     videos: [], // Store fetched videos
@@ -35,6 +35,17 @@ var app = new Vue({
         this.videos = response.data; // Assuming API returns { videos: [...] }
       })
       .catch(e => {
+        console.log("Error fetching videos:", e);
+      });
+    },
+    searchVideos(){
+      axios
+      .get(this.serviceURL + "/search?s=" + this.input.searchTerm)
+      .then(response => {
+        console.log("Fetched videos:", response.data);
+        this.videos = response.data
+      })
+      .catch(e =>{
         console.log("Error fetching videos:", e);
       });
     }
