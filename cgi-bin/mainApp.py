@@ -56,10 +56,15 @@ def not_found(error):
 def not_found(error):
 	return make_response(jsonify( { 'status': 'Internal server error' } ), 500)
 
-class Root(Resource):
+class verify(Resource):
 	def get(self):
 		hashString = request.args.get('v')
-		return verifyUser.verifyUser(hashString)
+		response = verifyUser.verifyUser(hashString)
+		if response['Status'] != 200:
+			return response
+		else:
+			redirectURL = "https://cs3103.cs.unb.ca:" + str(settings.APP_PORT) + "/"
+			return redirect(redirectURL)
 
 class SignIn(Resource):
 	def post(self):
@@ -245,7 +250,7 @@ class getVideoDB(Resource):
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
 app.config['UPLOAD_PATH'] = "static/videosTest/"
 api = Api(app)
-api.add_resource(Root,'/verify')
+api.add_resource(verify,'/verify')
 api.add_resource(SignIn, '/login')
 api.add_resource(logout, '/logout')
 api.add_resource(signUp, '/signup')
