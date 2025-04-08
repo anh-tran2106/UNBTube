@@ -19,7 +19,7 @@ import getUserVideos
 import findVideos
 import addLike
 import getLikes
-import incrementViews.py
+import incrementViews
 import addDislike
 from werkzeug.utils import secure_filename
 
@@ -318,7 +318,7 @@ api.add_resource(comments, '/comments')
 api.add_resource(userVideos, '/user', '/user/<userID>')
 api.add_resource(searchVideo, '/search')
 api.add_resource(addLikeDB, '/addLike')
-api.add_resource(addLikeDB, '/addDislike')
+api.add_resource(addDislikeDB, '/addDislike')
 api.add_resource(getLikesDB, '/getLikes')
 
 @app.route("/")
