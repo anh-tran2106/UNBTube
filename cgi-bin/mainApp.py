@@ -152,7 +152,7 @@ class getAllVideos(Resource):
         return make_response(jsonify(getAllVideosDB.getAllVideos()), 200)
 class getVideoDB(Resource):
 	def get(self):
-		vidID = request.args.get('s')
+		vidID = request.args.get('v')
 		if vidID != '':
 			return make_response(jsonify(getVideoDB.getVideo(vidID)))
 		# Parse the json
