@@ -238,8 +238,9 @@ class userVideos(Resource):
 			
 class getVideoDB(Resource):
 	def get(self):
-		if not request.json:
-			abort(400) # bad request
+		vidID = request.args.get('v')
+		if vidID != '':
+			return make_response(jsonify(getVideo.getVideo(vidID)))
 		# Parse the json
 		parser = reqparse.RequestParser()
 		try:
@@ -248,7 +249,7 @@ class getVideoDB(Resource):
 			request_params = parser.parse_args()
 		except:
 			abort(400)
-		return make_response(jsonify(getVideo.getVideo(request_params['vidID'])), 200)
+		return make_response(jsonify(getVideo.getVideo(request_params['vidID'])))
    
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
 app.config['UPLOAD_PATH'] = "static/videosTest/"
