@@ -295,6 +295,8 @@ api.add_resource(getVideoDB, '/video')
 api.add_resource(comments, '/comments')
 api.add_resource(userVideos, '/user', '/user/<userID>')
 api.add_resource(searchVideo, '/search')
+api.add_resource(addLikeDB, '/addLike')
+api.add_resource(getLikesDB, '/getLikes')
 
 @app.route("/")
 def frontend():
