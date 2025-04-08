@@ -17,7 +17,6 @@ import addComments
 import getAllComments
 import getUserVideos
 import findVideos
-import checkVerified
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py

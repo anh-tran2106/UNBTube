@@ -10,27 +10,43 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-body-tertiary">
             <div class="container-fluid justify-content-between">
                 <!-- Left elements -->
-                <div class="d-flex">
-                    <a class="navbar-brand" href="#">UNBTube</a>
+                <div class="d-flex align-items-center clickable-brand hover-effect" @click="getVideos">
+                  <img 
+                    src="https://www.cs.unb.ca/~jdh/logolg.gif"
+                    style="height: 32px; margin-right: 8px;"
+                  >
+                  <span class="navbar-brand text-white fw-bold mb-0">UNBTube</span>
                 </div>
                 <!-- Left elements -->
+
             
                 <!-- Center elements -->
                 <div class="input-group w-50">
-                  <input type="text" class="form-control" placeholder="Search">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Search" 
+                    v-model="input.searchTerm"
+                  >
                   <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button">
+                    <button 
+                      class="btn btn-secondary" 
+                      type="button" 
+                      @click="searchVideos"
+                    >
                       <i class="fa fa-search"></i>
                     </button>
                   </div>
                 </div>
                 <!-- Center elements -->
+
             
                 <!-- Right elements -->
                 <div class="navbar-nav flex-row">
                     <!-- Dropdown -->
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <h1 class="account-text">Account</h1>
                         <i class="fa fa-user" aria-hidden="true"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-right">

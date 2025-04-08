@@ -71,3 +71,16 @@
     border-radius: 2px;
   }
   
+  .clickable-brand {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .clickable-brand:hover {
+    filter: brightness(1.2);
+  }
+
+  .account-text {
+    margin-right: 8px; /* Adjust this value to control the spacing */
+  }
+  
