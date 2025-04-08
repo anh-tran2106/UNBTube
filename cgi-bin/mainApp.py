@@ -18,6 +18,7 @@ import getAllComments
 import getUserVideos
 import findVideos
 import addLike
+import getLikes
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -267,6 +268,18 @@ class addLikeDB(Resource):
 				abort(400)
 		else:
 			abort(401)
+class getLikesDB(Resource):
+	def get(self):
+		if not request.json:
+			abort(400)
+		parser = reqparse.RequestParser()
+		try:
+			parser.add_argument('vidID', type=str, required=True)
+			request_parms = parser.parse_args()
+			return make_response(jsonify(getLikes.getLikes(request_parms['vidID'])))
+		except:
+			abort(400)
+   
    
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
 app.config['UPLOAD_PATH'] = "static/videosTest/"
