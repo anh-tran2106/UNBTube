@@ -20,6 +20,7 @@ import findVideos
 import addLike
 import getLikes
 import incrementViews.py
+import addDislike
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -269,6 +270,24 @@ class addLikeDB(Resource):
 				abort(400)
 		else:
 			abort(401)
+   
+class addDislikeDB(Resource):
+	def post(self):
+		if 'username' in session:
+			if not request.json:
+				abort(400)
+			parser = reqparse.RequestParser()
+			try:
+				parser.add_argument('vidID', type=str, required=True)
+				parser.add_argument('userID', type=str, required=True)
+				request_params = parser.parse_args()
+				return make_response(jsonify(addDislike.addDislike(request_params['vidID'],request_params['userID'])))
+			except:
+				abort(400)
+		else:
+			abort(401)
+   
+   
 class getLikesDB(Resource):
 	def get(self):
 		if not request.json:
@@ -299,6 +318,7 @@ api.add_resource(comments, '/comments')
 api.add_resource(userVideos, '/user', '/user/<userID>')
 api.add_resource(searchVideo, '/search')
 api.add_resource(addLikeDB, '/addLike')
+api.add_resource(addLikeDB, '/addDislike')
 api.add_resource(getLikesDB, '/getLikes')
 
 @app.route("/")
