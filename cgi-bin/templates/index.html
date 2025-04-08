@@ -73,7 +73,7 @@
           <div v-for="video in videos" class="video-container">
             <h3>[[ video.title ]]</h3>
             <p>[[ video.description ]]</p>
-            <video width="320" height="240" controls>
+            <video ref="videoPlayers" width="320" height="240" controls>
               <source :src="serviceURL + '/' + video.videoFile" type="video/mp4">
               Your browser does not support the video tag.
             </video>
