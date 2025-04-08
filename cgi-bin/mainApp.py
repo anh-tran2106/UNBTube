@@ -19,6 +19,7 @@ import getUserVideos
 import findVideos
 import addLike
 import getLikes
+import incrementViews.py
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -279,6 +280,8 @@ class getLikesDB(Resource):
 			return make_response(jsonify(getLikes.getLikes(request_parms['vidID'])))
 		except:
 			abort(400)
+
+   
    
    
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
