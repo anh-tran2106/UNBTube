@@ -278,7 +278,7 @@ api.add_resource(signUp, '/signup')
 api.add_resource(getUsers, '/users')
 api.add_resource(uploadVideo, '/upload')
 api.add_resource(getAllVideos, '/videos')
-api.add_resource(getVideoDB, '/watch')
+api.add_resource(getVideoDB, '/video')
 api.add_resource(comments, '/comments')
 api.add_resource(userVideos, '/user', '/user/<userID>')
 api.add_resource(searchVideo, '/search')
@@ -291,15 +291,19 @@ def frontend():
 		return render_template("login.html")  # Show login page for guests
 
 @app.route("/signup")
-def signup_frontend():
+def signupFrontend():
  	return render_template("signup.html")
 
 @app.route("/upload")
-def uploadPage():
+def uploadFrontend():
 	if 'username' in session:
 		return render_template("upload.html") 
 	else:
 		abort(401)
+
+@app.route("/watch")
+def videoFrontend():
+ 	return render_template("watch.html")
 
 
 

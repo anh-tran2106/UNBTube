@@ -68,4 +68,5 @@ var app = new Vue({
   created() {
     this.getVideos();
   }
+  //------- END methods --------
 });

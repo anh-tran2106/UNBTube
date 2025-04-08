@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Watch Video - UNBTube</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+  </head>
+  <body>
+    <div id="app" class="container mt-5">
+      <div v-if="video">
+        <h2>[[ video.title ]]</h2>
+        <video width="640" height="360" controls class="mb-3">
+          <source :src="serviceURL + '/' + video.videoFile" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p><strong>Description:</strong> [[ video.description ]]</p>
+        <p><strong>Views:</strong> [[ video.views ]]</p>
+        <p><strong>Likes:</strong> [[ video.likes ]]</p>
+
+        <div class="btn-group mt-3">
+          <button class="btn btn-success" @click="likeVideo"><i class="fa fa-thumbs-up"></i> Like</button>
+          <button class="btn btn-danger" @click="dislikeVideo"><i class="fa fa-thumbs-down"></i> Dislike</button>
+        </div>
+      </div>
+      <div v-else>
+        <p>Loading video...</p>
+      </div>
+    </div>
+
+    <!-- Vue & Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/watch.js"></script>
+    <link rel="stylesheet" href="/static/main.css"/>
+  </body>
+</html>
