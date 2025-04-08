@@ -6,26 +6,34 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
   </head>
   <body>
-    <div id="app" class="container mt-5">
-      <div v-if="video">
-        <h2>[[ video.title ]]</h2>
-        <video width="640" height="360" controls class="mb-3">
-          <source :src="serviceURL + '/' + video.videoFile" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <p><strong>Description:</strong> [[ video.description ]]</p>
-        <p><strong>Views:</strong> [[ video.views ]]</p>
-        <p><strong>Likes:</strong> [[ video.likes ]]</p>
-
-        <div class="btn-group mt-3">
-          <button class="btn btn-success" @click="likeVideo"><i class="fa fa-thumbs-up"></i> Like</button>
-          <button class="btn btn-danger" @click="dislikeVideo"><i class="fa fa-thumbs-down"></i> Dislike</button>
+    <div class="container-fluid" id="app">
+      <div class="jumbotron jumbotron-fluid text-center">
+        <div id="app" class="container mt-5">
+          <div v-if="video">
+            <h2>[[ video.title ]]</h2>
+            <video width="640" height="360" controls class="mb-3">
+              <source :src="serviceURL + '/' + video.videoFile" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p><strong>Description:</strong> [[ video.description ]]</p>
+            <p><strong>Views:</strong> [[ video.views ]]</p>
+            <p><strong>Likes:</strong> [[ video.likes ]]</p>
+    
+            <div class="btn-group mt-3">
+              <button class="btn btn-success" @click="likeVideo"><i class="fa fa-thumbs-up"></i> Like</button>
+              <button class="btn btn-danger" @click="dislikeVideo"><i class="fa fa-thumbs-down"></i> Dislike</button>
+            </div>
+          </div>
+          <div v-else>
+            <p>Loading video...</p>
+          </div>
         </div>
-      </div>
-      <div v-else>
-        <p>Loading video...</p>
+
+        <hr>
+        <a href="/"><button class="col-4 btn btn-primary" type="button">Main Page</button></a>
       </div>
     </div>
+
 
     <!-- Vue & Axios -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

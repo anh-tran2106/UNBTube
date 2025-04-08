@@ -11,7 +11,7 @@ var app = new Vue({
         axios.get(this.serviceURL + "/video?v=" + this.vidID)
           .then(response => {
             console.log(response.data);
-            this.video = response.data;
+            this.video = response.data[0];
             console.log(this.video);
           })
           .catch(error => {
