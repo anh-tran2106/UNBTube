@@ -17,6 +17,7 @@ import addComments
 import getAllComments
 import getUserVideos
 import findVideos
+import addLike
 from werkzeug.utils import secure_filename
 
 import settings # Our server and db settings, stored in settings.py
@@ -250,6 +251,22 @@ class getVideoDB(Resource):
 		except:
 			abort(400)
 		return make_response(jsonify(getVideo.getVideo(request_params['vidID'])))
+
+class addLikeDB(Resource):
+	def post(self):
+		if 'username' in session:
+			if not request.json:
+				abort(400)
+			parser = reqparse.RequestParser()
+			try:
+				parser.add_argument('vidID', type=str, required=True)
+				parser.add_argument('userID', type=str, required=True)
+				request_params = parser.parse_args()
+				return make_response(jsonify(addLike.addLike(request_params['vidID'],request_params['userID'])))
+			except:
+				abort(400)
+		else:
+			abort(401)
    
 app.config['UPLOAD_EXTENSIONS'] = ['.mp4', 'WebM'] 
 app.config['UPLOAD_PATH'] = "static/videosTest/"
