@@ -34,7 +34,7 @@ var app = new Vue({
     created() {
       this.vidID = this.getQueryParam("v");
       this.fetchVideo();
-      sleep(1000);
+      
       console.log(this.vidID);
       console.log(this.video);
     }
