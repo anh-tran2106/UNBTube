@@ -321,7 +321,9 @@ def uploadFrontend():
 
 @app.route("/watch")
 def videoFrontend():
- 	return render_template("watch.html")
+	vidID = request.args.get('v')
+	incrementViews.incrementViews(vidID)
+	return render_template("watch.html")
 
 
 
