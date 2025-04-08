@@ -154,7 +154,7 @@ class getVideoDB(Resource):
 	def get(self):
 		vidID = request.args.get('v')
 		if vidID != '':
-			return make_response(jsonify(getVideoDB.getVideo(vidID)))
+			return make_response(jsonify(getVideo.getVideo(vidID)))
 		# Parse the json
 		parser = reqparse.RequestParser()
 		try:
@@ -163,7 +163,7 @@ class getVideoDB(Resource):
 			request_params = parser.parse_args()
 		except:
 			abort(400)
-		return make_response(jsonify(getVideoDB.getVideo(request_params['vidID'])))
+		return make_response(jsonify(getVideo.getVideo(request_params['vidID'])))
 
 class uploadVideo(Resource):
 	def post(self):
