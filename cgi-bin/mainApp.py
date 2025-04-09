@@ -290,8 +290,9 @@ class addDislikeDB(Resource):
    
 class getLikesDB(Resource):
 	def get(self):
-		if not request.json:
-			abort(400)
+		vidID = request.args.get('v')
+		if vidID != '':
+			return make_response(jsonify(getLikes.getLikes(vidID)))
 		parser = reqparse.RequestParser()
 		try:
 			parser.add_argument('vidID', type=str, required=True)
