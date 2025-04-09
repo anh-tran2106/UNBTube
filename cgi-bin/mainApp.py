@@ -182,7 +182,7 @@ class uploadVideo(Resource):
 				os.makedirs(otherDir)
 				uploaded_file.save(os.path.join(otherDir ,filename))
 				videoInfo = request.form.to_dict()
-				uploadVideosDB.uploadVideo(otherDir + filename, videoInfo['title'], videoInfo['desc'], getUserID.getUserID(session.get('username')))
+				uploadVideosDB.uploadVideo(otherDir + filename, videoInfo['title'], videoInfo['desc'], getUserID.getUserID(session.get('username'))["UserId"])
 				return redirect('/')
 
 class searchVideo(Resource):

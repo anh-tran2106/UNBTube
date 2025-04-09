@@ -19,8 +19,9 @@ def uploadVideo(fileURL, title, description, userId):
     except pymysql.MySQLError as e:
         retVal = {"Status": 400, "Message": "A MySQL Error has occured"}
     except Exception as e:
-        retVal = {"Status": 500, "Message": "A general error has occured.\nError message: {e}"}
+        retVal = {"Status": 500, "Message": "A general error has occured.", "Error message": e}
     finally:
         cursor.close()
         dbConnection.close()
+        print(retVal)
         return retVal
