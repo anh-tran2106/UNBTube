@@ -26,4 +26,4 @@ def getUserID(username):
     if userInfo == None:
         return {"Status": 400, "Message": "A MySQL Error has occured", "Error Message": e}
     else:
-        return userInfo["userId"]
+        return {"UserId": userInfo["userId"]}
