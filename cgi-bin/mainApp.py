@@ -300,6 +300,9 @@ class getLikesDB(Resource):
 		except:
 			abort(400)
 
+class getUserIDDB(Resource):
+	def get(self):
+		return make_response(jsonify(getUserID.getUserID(session.get("username"))))
    
    
    
@@ -320,6 +323,7 @@ api.add_resource(searchVideo, '/search')
 api.add_resource(addLikeDB, '/addLike')
 api.add_resource(addDislikeDB, '/addDislike')
 api.add_resource(getLikesDB, '/getLikes')
+api.add_resource(getUserIDDB, '/getUserID')
 
 @app.route("/")
 def frontend():
